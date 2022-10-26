@@ -1,10 +1,10 @@
 package board.boardtest1.service;
 
+import board.boardtest1.domain.Criteria;
 import board.boardtest1.domain.vo.BoardVO;
 import board.boardtest1.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +26,10 @@ public class BoardService {
 
     public List<BoardVO> findAllBoard() {
         return boardMapper.findBoardList();
+    }
+
+    public List<BoardVO> findListWithPaging(Criteria criteria) {
+        return boardMapper.findListWithPaging(criteria);
     }
 
     public int findBoardCount() {

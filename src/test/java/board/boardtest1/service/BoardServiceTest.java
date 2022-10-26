@@ -1,9 +1,8 @@
 package board.boardtest1.service;
 
+import board.boardtest1.domain.Criteria;
 import board.boardtest1.domain.vo.BoardVO;
-import board.boardtest1.mapper.BoardMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.test.annotation.Commit;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Slf4j
@@ -29,7 +27,7 @@ class BoardServiceTest {
         //givin
 //        BoardVO boardVO = BoardVO.createBoard("마블", "닥스", "닥터스트레인지");
 //        boardService.insertBoard(boardVO);
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 500; i++) {
             BoardVO boardVO = BoardVO.createBoard(i + "title", i + "content", i + "name");
             boardService.insertBoard(boardVO);
         }
@@ -77,5 +75,17 @@ class BoardServiceTest {
         String title = boardDetail.getTitle();
         //then
         assertThat(title).isEqualTo("마블");
+    }
+    
+    @Test
+    @DisplayName("목록페이징")
+    @Commit
+    public void 목록페이징() throws Exception {
+        //givin
+        Criteria criteria = new Criteria();
+        criteria.setPageNum(1);
+        //when
+        List<BoardVO> list = boardService.findListWithPaging(criteria);
+        //then
     }
 }
